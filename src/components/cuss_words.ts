@@ -31,11 +31,11 @@ export const CUSS_WORDS = [
   "MUFF",
   "BANG",
   "DIKE",
-  "CLAM",
   "SLIT",
   "DUMP",
   "CLIT",
   "HUMP",
   "BLOW",
-  "TURD"
+  "TURD",
+  "ANAL"
 ];
