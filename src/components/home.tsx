@@ -182,7 +182,7 @@ const Home: React.FC<HomeProps> = (props) => {
         backgroundColor={"#000"}
       >
         <Text
-          marginTop={"-300px"}
+          marginTop={"-400px"}
           fontFamily={"monospace"}
           fontSize={"4rem"}
           marginBottom={"2rem"}
