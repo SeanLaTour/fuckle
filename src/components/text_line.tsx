@@ -14,6 +14,7 @@ const TextLine: React.FC<TextLineProps> = (props) => {
       justifyContent={"space-evenly"}
       display={"flex"}
       flexDirection={"row"}
+      alignItems={"center"}
     >
       <Text
         fontFamily={"monospace"}
