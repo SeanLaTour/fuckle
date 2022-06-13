@@ -1,0 +1,17 @@
+export const CUSS_WORDS = [
+  "FUCK",
+  "SHIT",
+  "PISS",
+  "CUNT",
+  "DICK",
+  "JIZZ",
+  "TITS",
+  "COCK",
+  "DONG",
+  "TWAT",
+  "FART",
+  "POOP",
+  "NIPS",
+  "CRAP",
+  "HELL",
+];
