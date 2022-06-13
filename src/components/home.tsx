@@ -86,7 +86,7 @@ const Home: React.FC<HomeProps> = (props) => {
       }
     }
     setColors(tempColorsArray);
-    const input = returnDocument()
+    const input = returnDocument();
     if (!input) return;
     input.value = "";
     if (word.join("") === cussword) {
@@ -113,10 +113,10 @@ const Home: React.FC<HomeProps> = (props) => {
 
   const returnDocument = () => {
     if (typeof window !== `undefined`) return document.querySelector("input");
-  }
+  };
 
   const enterChecker = (line: number) => {
-    const input =  returnDocument()
+    const input = returnDocument();
     if (!input) return;
     input.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
@@ -178,10 +178,11 @@ const Home: React.FC<HomeProps> = (props) => {
         justifyContent={"center"}
         alignItems={"center"}
         width={"100vw"}
-        height={"100vh"}
+        height={"1000px"}
         backgroundColor={"#000"}
       >
         <Text
+          marginTop={"-200px"}
           fontFamily={"monospace"}
           fontSize={"4rem"}
           marginBottom={"2rem"}
@@ -193,7 +194,7 @@ const Home: React.FC<HomeProps> = (props) => {
           padding={"0.5rem"}
           paddingBlock={"2rem"}
           width={"80vw"}
-          height={"70vh"}
+          height={"32rem"}
           borderColor={"white"}
           borderStyle={"solid"}
           borderRadius={"5px"}
