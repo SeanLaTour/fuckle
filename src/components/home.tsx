@@ -6,9 +6,6 @@ import {
   Text,
   ModalOverlay,
   ModalContent,
-  ModalCloseButton,
-  ModalBody,
-  ModalHeader,
   Button,
 } from "@chakra-ui/react";
 import React from "react";
@@ -89,7 +86,7 @@ const Home: React.FC<HomeProps> = (props) => {
       }
     }
     setColors(tempColorsArray);
-    const input = document.querySelector("input");
+    const input = returnDocument()
     if (!input) return;
     input.value = "";
     if (word.join("") === cussword) {
@@ -114,8 +111,12 @@ const Home: React.FC<HomeProps> = (props) => {
     }
   };
 
+  const returnDocument = () => {
+    if (typeof window !== `undefined`) return document.querySelector("input");
+  }
+
   const enterChecker = (line: number) => {
-    const input = document.querySelector("input");
+    const input =  returnDocument()
     if (!input) return;
     input.addEventListener("keyup", (event) => {
       if (event.key === "Enter") {
