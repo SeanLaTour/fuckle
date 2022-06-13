@@ -192,9 +192,9 @@ const Home: React.FC<HomeProps> = (props) => {
         </Text>
         <Box
           padding={"0.5rem"}
-          paddingBlock={"2rem"}
+          paddingBlock={".5rem"}
           width={"80vw"}
-          height={"32rem"}
+          height={"28rem"}
           borderColor={"white"}
           borderStyle={"solid"}
           borderRadius={"5px"}
