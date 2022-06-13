@@ -59,7 +59,7 @@ const Home: React.FC<HomeProps> = (props) => {
         return "two";
       case 3:
         return "three";
-      case 3:
+      case 4:
         return "four";
     }
   };
