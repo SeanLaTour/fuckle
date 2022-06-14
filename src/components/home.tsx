@@ -1,6 +1,5 @@
 import {
   Box,
-  Input,
   Modal,
   useDisclosure,
   Text,
@@ -12,6 +11,7 @@ import React from "react";
 import { useState } from "react";
 import TextLine from "./text_line";
 import { CUSS_WORDS } from "./cuss_words";
+import Keyboard from "./keyboard";
 
 interface HomeProps {}
 
@@ -86,11 +86,7 @@ const Home: React.FC<HomeProps> = (props) => {
       }
     }
     setColors(tempColorsArray);
-    const input = returnDocument();
-    if (!input) return;
-    input.value = "";
     if (word.join("") === cussword) {
-      input.style.display = "none";
       setModalText(
         `You son of a bitch! You did it in ${translateNumberToText(
           currentLine
@@ -101,7 +97,6 @@ const Home: React.FC<HomeProps> = (props) => {
       }, 2000);
     }
     if (word.join("") !== cussword && currentLine === 4) {
-      input.style.display = "none";
       setModalText(
         `You failed! You piece of shit! How could you fail!? The word was ${cussWord}!`
       );
@@ -116,25 +111,18 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   const enterChecker = (line: number) => {
-    const input = returnDocument();
-    if (!input) return;
-    input.addEventListener("keyup", (event) => {
-      if (event.key === "Enter") {
-        switch (line) {
-          case 1:
-            checkIfMatch(textA, cussWord, setTextAColors);
-            break;
-          case 2:
-            checkIfMatch(textB, cussWord, setTextBColors);
-          case 3:
-            checkIfMatch(textC, cussWord, setTextCColors);
-          case 4:
-            checkIfMatch(textD, cussWord, setTextDColors);
-        }
-      }
-    });
+    switch (line) {
+      case 1:
+        checkIfMatch(textA, cussWord, setTextAColors);
+        break;
+      case 2:
+        checkIfMatch(textB, cussWord, setTextBColors);
+      case 3:
+        checkIfMatch(textC, cussWord, setTextCColors);
+      case 4:
+        checkIfMatch(textD, cussWord, setTextDColors);
+    }
   };
-  enterChecker(currentLine);
 
   const textInput = (word: string, setFunction: Function) => {
     const wordArray = word.toUpperCase().split("");
@@ -158,20 +146,22 @@ const Home: React.FC<HomeProps> = (props) => {
     }
   };
 
+  const determineLine = (currentLine: number) => {
+    switch (currentLine) {
+      case 1:
+        return { text: textA, setText: setTextA };
+
+      case 2:
+        return { text: textB, setText: setTextB };
+      case 3:
+        return { text: textC, setText: setTextC };
+      case 4:
+        return { text: textD, setText: setTextD };
+    }
+  };
+
   return (
     <>
-      <Input
-        zIndex={2}
-        onChange={(e) => addTextToLine(e.target.value)}
-        position={"fixed"}
-        opacity={"0"}
-        width={"100vw"}
-        height={"100vh"}
-        top={"0"}
-        left={"0"}
-        maxLength={4}
-        inputMode="none"
-      />
       <Box
         padding="2rem"
         flexDirection={"column"}
@@ -252,6 +242,12 @@ const Home: React.FC<HomeProps> = (props) => {
             </Box>
           </ModalContent>
         </Modal>
+        <Keyboard
+          currentLine={currentLine}
+          onClick={enterChecker}
+          textObj={determineLine(currentLine)}
+          addText={addTextToLine}
+        />
       </Box>
     </>
   );

@@ -37,5 +37,5 @@ export const CUSS_WORDS = [
   "HUMP",
   "BLOW",
   "TURD",
-  "ANAL"
+  "ANAL",
 ];
