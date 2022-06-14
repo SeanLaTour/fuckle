@@ -15,6 +15,8 @@ const Key: React.FC<KeyProps> = (props) => {
   const [color, setColor] = useState("#aaa");
   const sliceIndex = (currentLine: number) => {
     switch (currentLine) {
+        case 1:
+            return [0,4]
       case 2:
         return [0, 4];
       case 3:
