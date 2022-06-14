@@ -42,7 +42,7 @@ const Key: React.FC<KeyProps> = (props) => {
       if (letterArray.slice(0, sliceNumbers[0]).includes(letter)) return;
       setColor("#333");
 
-      if (indexWord == indexCuss && indexCuss !== -1) {
+      if (indexWord === indexCuss && indexCuss !== -1) {
         setColor("green");
       } else if (
         cussword.includes(letter) &&
