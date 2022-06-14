@@ -37,7 +37,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
       position={"fixed"}
       bottom="0"
       backgroundColor={"#222"}
-      height="25%"
+      height="27%"
       width={"100%"}
     >
       <Box
