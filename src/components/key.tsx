@@ -15,14 +15,14 @@ const Key: React.FC<KeyProps> = (props) => {
   const [color, setColor] = useState("#aaa");
   const sliceIndex = (currentLine: number) => {
     switch (currentLine) {
-      case 1:
-        return [0, 3];
       case 2:
-        return [4, 7];
+        return [0, 4];
       case 3:
-        return [8, 11];
+        return [4, 8];
       case 4:
-        return [12, 15];
+        return [8, 12];
+      case 5:
+        return [12, 16];
     }
   };
 
@@ -38,7 +38,18 @@ const Key: React.FC<KeyProps> = (props) => {
     if (letterArray.includes(letter)) {
       setColor("#333");
       console.log(sliceNumbers);
-      console.log(letterArray);
+      const word = letters.split("").slice(sliceNumbers[0], sliceNumbers[1]);
+      const indexCuss = cussword.split("").indexOf(letter);
+      const indexWord = word.indexOf(letter);
+      console.log(letter);
+      console.log("word", word, "cuss", cussword.split(""));
+      console.log("word", indexWord, "cuss", indexCuss);
+      if (cussword.includes(letter)) {
+        setColor("yellow");
+      }
+      if (indexWord == indexCuss && indexCuss !== -1) {
+        setColor("green");
+      }
     }
   };
 
