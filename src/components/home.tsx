@@ -89,7 +89,6 @@ const Home: React.FC<HomeProps> = (props) => {
     }
     setColors(tempColorsArray);
     setAllUsedLetters(allUsedLetters + word.join(""));
-    console.log(allUsedLetters);
 
     if (word.join("") === cussword) {
       setModalText(

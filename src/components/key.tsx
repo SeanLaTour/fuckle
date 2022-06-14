@@ -36,19 +36,23 @@ const Key: React.FC<KeyProps> = (props) => {
 
     const letterArray = letters.split("");
     if (letterArray.includes(letter)) {
-      setColor("#333");
       console.log(sliceNumbers);
       const word = letters.split("").slice(sliceNumbers[0], sliceNumbers[1]);
       const indexCuss = cussword.split("").indexOf(letter);
       const indexWord = word.indexOf(letter);
+      if (letterArray.slice(0, sliceNumbers[0]).includes(letter)) return;
+      setColor("#333");
       console.log(letter);
       console.log("word", word, "cuss", cussword.split(""));
       console.log("word", indexWord, "cuss", indexCuss);
-      if (cussword.includes(letter)) {
-        setColor("yellow");
-      }
+
       if (indexWord == indexCuss && indexCuss !== -1) {
         setColor("green");
+      } else if (
+        cussword.includes(letter) &&
+        !letterArray.slice(0, sliceNumbers[0]).includes(letter)
+      ) {
+        setColor("yellow");
       }
     }
   };
