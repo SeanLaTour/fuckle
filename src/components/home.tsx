@@ -170,6 +170,7 @@ const Home: React.FC<HomeProps> = (props) => {
         top={"0"}
         left={"0"}
         maxLength={4}
+        inputMode="none"
       />
       <Box
         padding="2rem"
