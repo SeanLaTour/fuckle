@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface KeyProps {
   letter: string;
@@ -7,17 +7,57 @@ interface KeyProps {
   setLetter: Function;
   onClick?: Function;
   currentLine?: number;
+  allUsedLetters: string;
+  cussword: string;
 }
 
 const Key: React.FC<KeyProps> = (props) => {
-  console.log(props.onClick, props.letter);
+  const [color, setColor] = useState("#aaa");
+  const sliceIndex = (currentLine: number) => {
+    switch (currentLine) {
+      case 1:
+        return [0, 3];
+      case 2:
+        return [4, 7];
+      case 3:
+        return [8, 11];
+      case 4:
+        return [12, 15];
+    }
+  };
+
+  const colorCodeUsedLetters = (
+    letters: string,
+    letter: string,
+    currentLine: number,
+    cussword: string
+  ) => {
+    const sliceNumbers = sliceIndex(currentLine);
+
+    const letterArray = letters.split("");
+    if (letterArray.includes(letter)) {
+      setColor("#333");
+      console.log(sliceNumbers);
+      console.log(letterArray);
+    }
+  };
+
+  useEffect(() => {
+    colorCodeUsedLetters(
+      props.allUsedLetters,
+      props.letter,
+      props.currentLine,
+      props.cussword
+    );
+  }, [props.allUsedLetters]);
+
   return (
     <Box
-      onClick={() =>
+      onClick={() => {
         props.letter === "Enter"
           ? props.onClick(props.currentLine)
-          : props.setLetter(props.letter)
-      }
+          : props.setLetter(props.letter);
+      }}
       transition={"border-color ease .05s"}
       display={"flex"}
       justifyContent={"center"}
@@ -27,7 +67,7 @@ const Key: React.FC<KeyProps> = (props) => {
       _active={{ borderColor: "white" }}
       marginInline={"0.2rem"}
       borderRadius={"5px"}
-      backgroundColor="#aaa"
+      backgroundColor={color}
       width={props.thickKey ? "12vw" : "8vw"}
       height={"100%"}
       color={"white"}

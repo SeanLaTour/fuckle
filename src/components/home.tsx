@@ -18,6 +18,7 @@ interface HomeProps {}
 const Home: React.FC<HomeProps> = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalText, setModalText] = useState("");
+  const [allUsedLetters, setAllUsedLetters] = useState("");
   const [textA, setTextA] = useState([]);
   const [textB, setTextB] = useState([]);
   const [textC, setTextC] = useState([]);
@@ -67,7 +68,8 @@ const Home: React.FC<HomeProps> = (props) => {
   const checkIfMatch = (
     word: string[],
     cussword: string,
-    setColors: Function
+    setColors: Function,
+    setAllUsedLetters: Function
   ) => {
     const compareWord = cussword.split("");
     const tempColorsArray = [];
@@ -86,6 +88,9 @@ const Home: React.FC<HomeProps> = (props) => {
       }
     }
     setColors(tempColorsArray);
+    setAllUsedLetters(allUsedLetters + word.join(""));
+    console.log(allUsedLetters);
+
     if (word.join("") === cussword) {
       setModalText(
         `You son of a bitch! You did it in ${translateNumberToText(
@@ -106,21 +111,18 @@ const Home: React.FC<HomeProps> = (props) => {
     }
   };
 
-  const returnDocument = () => {
-    if (typeof window !== `undefined`) return document.querySelector("input");
-  };
-
   const enterChecker = (line: number) => {
+    if (currentLine > 4) return;
     switch (line) {
       case 1:
-        checkIfMatch(textA, cussWord, setTextAColors);
+        checkIfMatch(textA, cussWord, setTextAColors, setAllUsedLetters);
         break;
       case 2:
-        checkIfMatch(textB, cussWord, setTextBColors);
+        checkIfMatch(textB, cussWord, setTextBColors, setAllUsedLetters);
       case 3:
-        checkIfMatch(textC, cussWord, setTextCColors);
+        checkIfMatch(textC, cussWord, setTextCColors, setAllUsedLetters);
       case 4:
-        checkIfMatch(textD, cussWord, setTextDColors);
+        checkIfMatch(textD, cussWord, setTextDColors, setAllUsedLetters);
     }
   };
 
@@ -247,6 +249,8 @@ const Home: React.FC<HomeProps> = (props) => {
           onClick={enterChecker}
           textObj={determineLine(currentLine)}
           addText={addTextToLine}
+          allUsedLetters={allUsedLetters}
+          cussword={cussWord}
         />
       </Box>
     </>

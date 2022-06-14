@@ -7,6 +7,8 @@ interface KeyboardProps {
   textObj: TextObj;
   onClick: Function;
   currentLine: number;
+  allUsedLetters: string;
+  cussword: string;
 }
 
 interface TextObj {
@@ -16,21 +18,20 @@ interface TextObj {
 
 const Keyboard: React.FC<KeyboardProps> = (props) => {
   const addLetterToArray = (letter: string) => {
+    if (!props.textObj) return;
     if (props.textObj.text.length >= 4) return;
-    console.log(props.textObj.text);
     let tempArray = [...props.textObj.text, letter];
     const string = tempArray.join("");
-    console.log(string);
     props.addText(string);
   };
 
   const removeLetterFromArray = () => {
+    if (!props.textObj) return;
     if (props.textObj.text.length < 1) return;
-    console.log(props.textObj.text);
     const tempText = props.textObj.text.slice(0, props.textObj.text.length - 1);
-    console.log(tempText);
     props.textObj.setText(tempText);
   };
+
   return (
     <Box
       position={"fixed"}
@@ -46,16 +47,76 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         height={"33%"}
         paddingBlock=".6rem"
       >
-        <Key setLetter={addLetterToArray} letter={"Q"} />
-        <Key setLetter={addLetterToArray} letter={"W"} />
-        <Key setLetter={addLetterToArray} letter={"E"} />
-        <Key setLetter={addLetterToArray} letter={"R"} />
-        <Key setLetter={addLetterToArray} letter={"T"} />
-        <Key setLetter={addLetterToArray} letter={"Y"} />
-        <Key setLetter={addLetterToArray} letter={"U"} />
-        <Key setLetter={addLetterToArray} letter={"I"} />
-        <Key setLetter={addLetterToArray} letter={"O"} />
-        <Key setLetter={addLetterToArray} letter={"P"} />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"Q"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"W"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"E"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"R"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"T"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"Y"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"U"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"I"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"O"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"P"}
+        />
       </Box>
       <Box
         display={"flex"}
@@ -65,15 +126,69 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         paddingInline={"4vw"}
         paddingBlock=".6rem"
       >
-        <Key setLetter={addLetterToArray} letter={"A"} />
-        <Key setLetter={addLetterToArray} letter={"S"} />
-        <Key setLetter={addLetterToArray} letter={"D"} />
-        <Key setLetter={addLetterToArray} letter={"F"} />
-        <Key setLetter={addLetterToArray} letter={"G"} />
-        <Key setLetter={addLetterToArray} letter={"H"} />
-        <Key setLetter={addLetterToArray} letter={"J"} />
-        <Key setLetter={addLetterToArray} letter={"K"} />
-        <Key setLetter={addLetterToArray} letter={"L"} />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"A"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"S"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"D"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"F"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"G"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"H"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"J"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"K"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"L"}
+        />
       </Box>
       <Box
         display={"flex"}
@@ -84,19 +199,70 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
       >
         <Key
           currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
           onClick={props.onClick}
           setLetter={addLetterToArray}
           letter={"Enter"}
           thickKey={true}
         />
-        <Key setLetter={addLetterToArray} letter={"Z"} />
-        <Key setLetter={addLetterToArray} letter={"X"} />
-        <Key setLetter={addLetterToArray} letter={"C"} />
-        <Key setLetter={addLetterToArray} letter={"V"} />
-        <Key setLetter={addLetterToArray} letter={"B"} />
-        <Key setLetter={addLetterToArray} letter={"N"} />
-        <Key setLetter={addLetterToArray} letter={"M"} />
-        <Key setLetter={removeLetterFromArray} letter={"<-"} thickKey={true} />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"Z"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"X"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"C"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"V"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"B"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"N"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={addLetterToArray}
+          letter={"M"}
+        />
+        <Key
+          currentLine={props.currentLine}
+          cussword={props.cussword}
+          allUsedLetters={props.allUsedLetters}
+          setLetter={removeLetterFromArray}
+          letter={"<-"}
+          thickKey={true}
+        />
       </Box>
     </Box>
   );
