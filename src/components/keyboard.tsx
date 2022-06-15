@@ -87,16 +87,16 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
       console.log(indexWord, indexCuss);
 
       if (indexWord === indexCuss && indexCuss !== -1) {
-        console.log("Green");
+     
         setFunction({ color: "green", keepSame: true });
       } else if (
         cussword.includes(letter) &&
         !letters.slice(0, sliceNumbers[0]).includes(letter) &&
         !keepSame
       ) {
-        console.log("Yellow");
+   
         setFunction({ color: "yellow", keepSame: false });
-      } else if (!keepSame) {
+      } else if (!keepSame && !cussword.includes(letter)) {
         setFunction({ color: "#333", keepSame: true });
       }
     }
@@ -315,6 +315,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
 
   const removeLetterFromArray = () => {
     if (!props.textObj) return;
+    if (props.textObj.text.length >= 4) return;
     if (props.textObj.text.length < 1) return;
     const tempText = props.textObj.text.slice(0, props.textObj.text.length - 1);
     props.textObj.setText(tempText);
