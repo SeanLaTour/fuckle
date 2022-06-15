@@ -88,20 +88,19 @@ const Home: React.FC<HomeProps> = (props) => {
       }
     };
     const findDoubleLettersLength = (word) => {
-      const tempArray = []
+      const tempArray = [];
       for (let i = 0; i <= 3; i++) {
         if (word[i] === word[i - 1]) {
           tempArray.push(word[i]);
         }
       }
-      return tempArray.length
+      return tempArray.length;
     };
-    
-    const doubleLetters = []
-    doubleLetters.push(findDoubleLetters(compareWord))
+
+    const doubleLetters = [];
+    doubleLetters.push(findDoubleLetters(compareWord));
     console.log(doubleLetters);
     for (let i = 0; i <= 3; i++) {
-
       if (word[i] === compareWord[i]) {
         tempColorsArray.push("green");
       } else if (
