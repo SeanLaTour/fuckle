@@ -186,6 +186,8 @@ const Home: React.FC<HomeProps> = (props) => {
         return { text: textC, setText: setTextC };
       case 4:
         return { text: textD, setText: setTextD };
+        case 5:
+          return { text: textD, setText: setTextD };
     }
   };
 
