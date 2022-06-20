@@ -68,7 +68,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
   };
 
   const colorCodeUsedLetters = (
-    letters: string,
+    letters: string[],
     letter: string,
     currentLine: number,
     cussword: string,
@@ -80,22 +80,27 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
 
     console.log("letters", letters, letter);
     if (letters.includes(letter)) {
-      console.log("HERE");
       const word = letters.slice(sliceNumbers[0], sliceNumbers[1]);
       const indexCuss = cussword.split("").indexOf(letter);
       const indexWord = word.indexOf(letter);
       console.log(indexWord, indexCuss);
 
       if (indexWord === indexCuss && indexCuss !== -1) {
-     
         setFunction({ color: "green", keepSame: true });
       } else if (
         cussword.includes(letter) &&
         !letters.slice(0, sliceNumbers[0]).includes(letter) &&
         !keepSame
       ) {
-   
+        console.log("IN ELSE IF");
+        const currentLetter = letters[indexWord];
         setFunction({ color: "yellow", keepSame: false });
+        for (let i = indexWord; i <= 3; i++) {
+          if (currentLetter === cussword.split("")[i]) {
+            console.log("HERE HEY!", letters[i], cussword.split("")[i]);
+            setFunction({ color: "green", keepSame: true });
+          }
+        }
       } else if (!keepSame && !cussword.includes(letter)) {
         setFunction({ color: "#333", keepSame: true });
       }
@@ -180,7 +185,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
       "I",
       props.currentLine,
       props.cussword,
-      setToggleG,
+      setToggleI,
       toggleI.keepSame
     );
     colorCodeUsedLetters(
