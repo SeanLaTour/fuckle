@@ -82,6 +82,13 @@ const Home: React.FC<HomeProps> = (props) => {
 
     const findDoubleLetters = (word) => {
       for (let i = 0; i <= 3; i++) {
+        for (let j = i; j <= 3; j++) {
+          console.log("DOUBLE LETTERS: ", word[i], word[j + 1]);
+          if (word[i] === word[j + 1]) {
+            console.log("TRUE", word[i], word[j + 1]);
+            return word[i];
+          }
+        }
         if (word[i] === word[i - 1]) {
           return word[i];
         }
