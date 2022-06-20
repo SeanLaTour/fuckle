@@ -224,7 +224,7 @@ const Home: React.FC<HomeProps> = (props) => {
           marginBottom={"2rem"}
           color={"white"}
         >
-          FUCKLE
+          FUCKLE 
         </Text>
         <Box
           padding={"0.5rem"}
