@@ -15,35 +15,6 @@ interface KeyProps {
 const Key: React.FC<KeyProps> = (props) => {
   const [color, setColor] = useState();
 
-  // const colorCodeUsedLetters = (
-  //   letters: string,
-  //   letter: string,
-  //   currentLine: number,
-  //   cussword: string
-  // ) => {
-  //   const sliceNumbers = sliceIndex(currentLine);
-  //   console.log(letter)
-
-  //   if (letters.includes(letter)) {
-  //     const word = letters.split("").slice(sliceNumbers[0], sliceNumbers[1]);
-  //     const indexCuss = cussword.split("").indexOf(letter);
-  //     const indexWord = word.indexOf(letter);
-  //     // if (letters.slice(0, sliceNumbers[0]).includes(letter)) return;
-  //     setColor("#333");
-  //     if (props.letter === "U") {
-  //       console.log("letters",letters.slice(0, sliceNumbers[0]).includes(letter))
-  //       console.log("here")}
-  //     if (indexWord === indexCuss && indexCuss !== -1) {
-  //       setColor("green");
-  //     } else if (
-  //       cussword.includes(letter) &&
-  //       !letters.slice(0, sliceNumbers[0]).includes(letter)
-  //     ) {
-  //       setColor("yellow");
-  //     }
-  //   }
-  // };
-
   useEffect(() => {
     setColor(props.color);
   }, [props.currentLine]);
