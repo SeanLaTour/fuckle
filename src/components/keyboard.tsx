@@ -64,6 +64,8 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         return [8, 12];
       case 5:
         return [12, 16];
+      case 6:
+        return [16, 20];
     }
   };
 

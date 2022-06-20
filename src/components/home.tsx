@@ -23,6 +23,7 @@ const Home: React.FC<HomeProps> = (props) => {
   const [textB, setTextB] = useState([]);
   const [textC, setTextC] = useState([]);
   const [textD, setTextD] = useState([]);
+  const [textE, setTextE] = useState([]);
   const [textAColors, setTextAColors] = useState([
     "black",
     "black",
@@ -47,6 +48,12 @@ const Home: React.FC<HomeProps> = (props) => {
     "black",
     "black",
   ]);
+  const [textEColors, setTextEColors] = useState([
+    "black",
+    "black",
+    "black",
+    "black",
+  ]);
   const [currentLine, setCurrentLine] = useState(1);
   const [cussWord, setCussWord] = useState(
     CUSS_WORDS[Math.floor(Math.random() * CUSS_WORDS.length)]
@@ -62,6 +69,8 @@ const Home: React.FC<HomeProps> = (props) => {
         return "three";
       case 4:
         return "four";
+      case 5:
+        return "five";
     }
   };
 
@@ -93,15 +102,6 @@ const Home: React.FC<HomeProps> = (props) => {
           return word[i];
         }
       }
-    };
-    const findDoubleLettersLength = (word) => {
-      const tempArray = [];
-      for (let i = 0; i <= 3; i++) {
-        if (word[i] === word[i - 1]) {
-          tempArray.push(word[i]);
-        }
-      }
-      return tempArray.length;
     };
 
     const doubleLetters = [];
@@ -135,7 +135,7 @@ const Home: React.FC<HomeProps> = (props) => {
         onOpen();
       }, 2000);
     }
-    if (word.join("") !== cussword && currentLine === 4) {
+    if (word.join("") !== cussword && currentLine === 5) {
       setModalText(
         `You failed! You piece of shit! How could you fail!? The word was ${cussWord}!`
       );
@@ -146,7 +146,7 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   const enterChecker = (line: number) => {
-    if (currentLine > 4) return;
+    if (currentLine > 5) return;
     switch (line) {
       case 1:
         checkIfMatch(textA, cussWord, setTextAColors, setAllUsedLetters);
@@ -157,6 +157,8 @@ const Home: React.FC<HomeProps> = (props) => {
         checkIfMatch(textC, cussWord, setTextCColors, setAllUsedLetters);
       case 4:
         checkIfMatch(textD, cussWord, setTextDColors, setAllUsedLetters);
+      case 5:
+        checkIfMatch(textE, cussWord, setTextEColors, setAllUsedLetters);
     }
   };
 
@@ -179,14 +181,17 @@ const Home: React.FC<HomeProps> = (props) => {
       case 4:
         textInput(word, setTextD);
         break;
+      case 5:
+        textInput(word, setTextE);
+        break;
     }
   };
 
   const determineLine = (currentLine: number) => {
+    console.log("CURRENT LINE: ", currentLine);
     switch (currentLine) {
       case 1:
         return { text: textA, setText: setTextA };
-
       case 2:
         return { text: textB, setText: setTextB };
       case 3:
@@ -194,7 +199,9 @@ const Home: React.FC<HomeProps> = (props) => {
       case 4:
         return { text: textD, setText: setTextD };
       case 5:
-        return { text: textD, setText: setTextD };
+        return { text: textE, setText: setTextE };
+      case 6:
+        return { text: textE, setText: setTextE };
     }
   };
 
@@ -211,7 +218,7 @@ const Home: React.FC<HomeProps> = (props) => {
         backgroundColor={"#000"}
       >
         <Text
-          marginTop={"-400px"}
+          marginTop={"-200px"}
           fontFamily={"monospace"}
           fontSize={"4rem"}
           marginBottom={"2rem"}
@@ -223,7 +230,7 @@ const Home: React.FC<HomeProps> = (props) => {
           padding={"0.5rem"}
           paddingBlock={".5rem"}
           width={"80vw"}
-          height={"28rem"}
+          height={"34rem"}
           borderColor={"white"}
           borderStyle={"solid"}
           borderRadius={"5px"}
@@ -248,6 +255,11 @@ const Home: React.FC<HomeProps> = (props) => {
             active={currentLine === 4 ? true : false}
             textColors={textDColors}
             textArray={textD}
+          />
+          <TextLine
+            active={currentLine === 5 ? true : false}
+            textColors={textEColors}
+            textArray={textE}
           />
         </Box>
         <Modal isOpen={isOpen} onClose={onClose}>

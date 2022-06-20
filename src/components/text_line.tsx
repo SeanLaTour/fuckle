@@ -10,7 +10,7 @@ interface TextLineProps {
 const TextLine: React.FC<TextLineProps> = (props) => {
   return (
     <Box
-      height={"25%"}
+      height={"20%"}
       justifyContent={"space-evenly"}
       display={"flex"}
       flexDirection={"row"}
