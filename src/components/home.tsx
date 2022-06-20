@@ -86,15 +86,12 @@ const Home: React.FC<HomeProps> = (props) => {
     if (word.join("") !== cussword) {
       setCurrentLine(currentLine + 1);
     }
-    console.log(compareWord);
     const alreadyUsedLetters = [];
 
     const findDoubleLetters = (word) => {
       for (let i = 0; i <= 3; i++) {
         for (let j = i; j <= 3; j++) {
-          console.log("DOUBLE LETTERS: ", word[i], word[j + 1]);
           if (word[i] === word[j + 1]) {
-            console.log("TRUE", word[i], word[j + 1]);
             return word[i];
           }
         }
@@ -106,7 +103,6 @@ const Home: React.FC<HomeProps> = (props) => {
 
     const doubleLetters = [];
     doubleLetters.push(findDoubleLetters(compareWord));
-    console.log(doubleLetters);
     for (let i = 0; i <= 3; i++) {
       if (word[i] === compareWord[i]) {
         tempColorsArray.push("green");
@@ -188,7 +184,6 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   const determineLine = (currentLine: number) => {
-    console.log("CURRENT LINE: ", currentLine);
     switch (currentLine) {
       case 1:
         return { text: textA, setText: setTextA };

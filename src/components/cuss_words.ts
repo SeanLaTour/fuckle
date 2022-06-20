@@ -39,4 +39,5 @@ export const CUSS_WORDS = [
   "ANAL",
   "FROT",
   "GIMP",
+  "PIMP",
 ];

@@ -78,9 +78,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     keepSame: boolean
   ) => {
     const sliceNumbers = sliceIndex(currentLine);
-    console.log(letter);
 
-    console.log("letters", letters, letter);
     if (letters.includes(letter)) {
       const word = letters.slice(sliceNumbers[0], sliceNumbers[1]);
       const indexCuss = cussword.split("").indexOf(letter);
@@ -97,9 +95,28 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         console.log("IN ELSE IF");
         const currentLetter = letters[indexWord];
         setFunction({ color: "yellow", keepSame: false });
+
+        const findDoubleLetters = (word) => {
+          for (let i = 0; i <= 3; i++) {
+            for (let j = i; j <= 3; j++) {
+              if (word[i] === word[j + 1]) {
+                return word[i];
+              }
+            }
+            if (word[i] === word[i - 1]) {
+              return word[i];
+            }
+          }
+        };
+    
+        const doubleLetters = [];
+        doubleLetters.push(findDoubleLetters(cussword));
+        console.log("DOUBLELetters", doubleLetters)
         for (let i = indexWord; i <= 3; i++) {
-          if (currentLetter === cussword.split("")[i]) {
-            console.log("HERE HEY!", letters[i], cussword.split("")[i]);
+          console.log("LOOP: ", currentLetter, cussword.split("")[i], i)
+          if (doubleLetters.includes(currentLetter) && currentLetter === cussword.split("")[i]) {
+            
+            console.log("HERE HEY!", currentLetter, cussword.split("")[i]);
             setFunction({ color: "green", keepSame: true });
           }
         }
