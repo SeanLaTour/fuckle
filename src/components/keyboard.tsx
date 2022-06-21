@@ -84,8 +84,19 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
       const indexCuss = cussword.split("").indexOf(letter);
       const indexWord = word.indexOf(letter);
       console.log(indexWord, indexCuss);
+      const currentLetter = letters[indexWord];
 
-      if (indexWord === indexCuss && indexCuss !== -1) {
+      function getAllIndexes(arr, val) {
+        var indexes = [],
+          i = -1;
+        while ((i = arr.indexOf(val, i + 1)) != -1) {
+          indexes.push(i);
+        }
+        return indexes;
+      }
+      const allIndexes = getAllIndexes(cussword, currentLetter)
+
+      if (indexWord === indexCuss && indexCuss !== -1 || indexWord === allIndexes[1] && indexCuss !== -1) {
         setFunction({ color: "green", keepSame: true });
       } else if (
         cussword.includes(letter) &&
@@ -93,9 +104,9 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         !keepSame
       ) {
         console.log("IN ELSE IF");
-        const currentLetter = letters[indexWord];
-        setFunction({ color: "yellow", keepSame: false });
 
+        setFunction({ color: "yellow", keepSame: false });
+        return
         const findDoubleLetters = (word) => {
           for (let i = 0; i <= 3; i++) {
             for (let j = i; j <= 3; j++) {
@@ -108,17 +119,41 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
             }
           }
         };
-    
+
+
+
+        const indexesOfLetter = getAllIndexes(
+          cussword.split(""),
+          currentLetter
+        );
+        console.log("letter indexes: ", indexesOfLetter);
         const doubleLetters = [];
         doubleLetters.push(findDoubleLetters(cussword));
-        console.log("DOUBLELetters", doubleLetters)
-        for (let i = indexWord; i <= 3; i++) {
-          console.log("LOOP: ", currentLetter, cussword.split("")[i], i)
-          if (doubleLetters.includes(currentLetter) && currentLetter === cussword.split("")[i]) {
-            
-            console.log("HERE HEY!", currentLetter, cussword.split("")[i]);
-            setFunction({ color: "green", keepSame: true });
-          }
+        console.log("DOUBLELetters", doubleLetters);
+        for (let i = 0; i <= 3; i++) {
+          console.log(
+            "loop",
+            currentLetter,
+            cussword.split("")[i],
+            indexWord,
+            indexesOfLetter[i],
+          );
+
+            if (
+              doubleLetters.includes(currentLetter)
+            ) {
+              if (i === indexesOfLetter[0] || i === indexesOfLetter[1]) {
+                console.log(
+                  "HERE HEY!",
+                  currentLetter,
+                  cussword.split("")[i],
+                  indexWord,
+                  indexesOfLetter[i],
+                );
+                setFunction({ color: "green", keepSame: true });
+              }
+            }
+          
         }
       } else if (!keepSame && !cussword.includes(letter)) {
         setFunction({ color: "#333", keepSame: true });
