@@ -6,16 +6,27 @@ interface StatsProps {
 }
 
 const Stats: React.FC<StatsProps> = (props) => {
-  console.log(props.stats);
+  console.log("stats stats: ", props.stats);
   const getPercent = (number) => {
+    console.log(
+      props.stats.one,
+      props.stats.two,
+      props.stats.three,
+      props.stats.four,
+      props.stats.five,
+      props.stats.six
+    );
     const total =
       props.stats.one +
       props.stats.two +
       props.stats.three +
       props.stats.four +
-      props.stats.five + props.stats.fail
+      props.stats.five +
+      props.stats.six;
+    console.log(total);
     return (number / total) * 100;
   };
+  console.log(getPercent(props.stats.six));
   return (
     <Box
       display={"flex"}
@@ -27,7 +38,7 @@ const Stats: React.FC<StatsProps> = (props) => {
       width={"85vw"}
       borderWidth={"2px"}
       borderColor={"white"}
-      height={"27vh"}
+      height={"25vh"}
       backgroundColor="#111"
     >
       <Text marginBottom={".5rem"} fontSize={"1.5rem"} color={"white"}>
@@ -41,7 +52,7 @@ const Stats: React.FC<StatsProps> = (props) => {
         alignItems={"center"}
       >
         <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
-          1)
+          1
         </Text>
 
         <Box
@@ -70,7 +81,7 @@ const Stats: React.FC<StatsProps> = (props) => {
         alignItems={"center"}
       >
         <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
-          2)
+          2
         </Text>
         <Box
           alignItems={"center"}
@@ -98,7 +109,7 @@ const Stats: React.FC<StatsProps> = (props) => {
         alignItems={"center"}
       >
         <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
-          3)
+          3
         </Text>
         <Box
           alignItems={"center"}
@@ -126,7 +137,7 @@ const Stats: React.FC<StatsProps> = (props) => {
         alignItems={"center"}
       >
         <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
-          4)
+          4
         </Text>
         <Box
           alignItems={"center"}
@@ -154,7 +165,7 @@ const Stats: React.FC<StatsProps> = (props) => {
         alignItems={"center"}
       >
         <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
-          5)
+          5
         </Text>
         <Box
           alignItems={"center"}
@@ -182,7 +193,7 @@ const Stats: React.FC<StatsProps> = (props) => {
         alignItems={"center"}
       >
         <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
-          F)
+          F
         </Text>
         <Box
           alignItems={"center"}
@@ -194,12 +205,12 @@ const Stats: React.FC<StatsProps> = (props) => {
             borderRadius={"3px"}
             backgroundColor={"green"}
             height={"1rem"}
-            width={`${getPercent(props.stats.fail)}%`}
+            width={`${getPercent(props.stats.six)}%`}
           ></Box>
         </Box>
         <Text width={"2rem"} color={"white"} marginInline={"0.5.5rem"}>
           {" "}
-          {props.stats.fail}
+          {props.stats.six}
         </Text>
       </Box>
     </Box>

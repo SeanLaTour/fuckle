@@ -17,7 +17,7 @@ import Stats from "./stats";
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = (props) => {
-  const isBrowser = typeof window !== "undefined"
+  const isBrowser = typeof window !== "undefined";
   const [toggleStats, setToggleStates] = useState(false);
   const [stats, setStats] = useState(
     isBrowser && window.localStorage.getItem("fuckle-stats")
@@ -28,9 +28,10 @@ const Home: React.FC<HomeProps> = (props) => {
           three: 0,
           four: 0,
           five: 0,
-          fail: 0
+          six: 0,
         }
   );
+  console.log("initial stats: ", stats);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalText, setModalText] = useState("");
   const [allUsedLetters, setAllUsedLetters] = useState("");
@@ -75,7 +76,11 @@ const Home: React.FC<HomeProps> = (props) => {
   );
 
   const setStatsFromCurrentGame = (attempts) => {
+    console.log(attempts);
     switch (attempts) {
+      case 6:
+        setStats((stats) => (stats.six += 1));
+        break;
       case 1:
         setStats((stats) => (stats.one += 1));
         break;
@@ -91,8 +96,6 @@ const Home: React.FC<HomeProps> = (props) => {
       case 5:
         setStats((stats) => (stats.one += 1));
         break;
-      default:
-        setStats((stats) => (stats.fail += 1));
     }
   };
 
@@ -168,7 +171,9 @@ const Home: React.FC<HomeProps> = (props) => {
       setStatsFromCurrentGame(currentLine);
       setTimeout(() => {
         console.log("STATS", stats);
-        isBrowser ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats)): stats;
+        isBrowser
+          ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats))
+          : stats;
         onOpen();
       }, 2000);
     }
@@ -176,7 +181,12 @@ const Home: React.FC<HomeProps> = (props) => {
       setModalText(
         `You failed! You piece of shit! How could you fail!? The word was ${cussWord}!`
       );
+      console.log("STATS", stats);
+      setStatsFromCurrentGame(6);
       setTimeout(() => {
+        isBrowser
+          ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats))
+          : stats;
         onOpen();
       }, 2000);
     }
@@ -310,7 +320,7 @@ const Home: React.FC<HomeProps> = (props) => {
           >
             {toggleStats ? (
               <Stats
-                stats={isBrowser? JSON.parse(window.localStorage.getItem("fuckle-stats")): stats}
+                stats={isBrowser ? JSON.parse(window.localStorage.getItem("fuckle-stats")) : stats}
               />
             ) : (
               <Box
