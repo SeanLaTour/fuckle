@@ -94,7 +94,7 @@ const Home: React.FC<HomeProps> = (props) => {
         setStats((stats) => (stats.four += 1));
         break;
       case 5:
-        setStats((stats) => (stats.one += 1));
+        setStats((stats) => (stats.five += 1));
         break;
     }
   };
