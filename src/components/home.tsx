@@ -19,7 +19,7 @@ interface HomeProps {}
 const Home: React.FC<HomeProps> = (props) => {
   const [toggleStats, setToggleStates] = useState(false);
   const [stats, setStats] = useState(
-    window.localStorage.getItem("fuckle-stats")
+    window !== undefined && window.localStorage.getItem("fuckle-stats")
       ? JSON.parse(window.localStorage.getItem("fuckle-stats"))
       : {
           one: 0,
@@ -164,7 +164,7 @@ const Home: React.FC<HomeProps> = (props) => {
       setStatsFromCurrentGame(currentLine);
       setTimeout(() => {
         console.log("STATS", stats);
-        window.localStorage.setItem("fuckle-stats", JSON.stringify(stats));
+        window !== undefined ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats));
         onOpen();
       }, 2000);
     }
@@ -306,7 +306,7 @@ const Home: React.FC<HomeProps> = (props) => {
           >
             {toggleStats ? (
               <Stats
-                stats={JSON.parse(window.localStorage.getItem("fuckle-stats"))}
+                stats={window !== undefined ? JSON.parse(window.localStorage.getItem("fuckle-stats")): stats}
               />
             ) : (
               <Box
