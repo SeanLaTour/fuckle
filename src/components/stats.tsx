@@ -13,7 +13,7 @@ const Stats: React.FC<StatsProps> = (props) => {
       props.stats.two +
       props.stats.three +
       props.stats.four +
-      props.stats.five;
+      props.stats.five + props.stats.fail
     return (number / total) * 100;
   };
   return (
@@ -27,7 +27,7 @@ const Stats: React.FC<StatsProps> = (props) => {
       width={"85vw"}
       borderWidth={"2px"}
       borderColor={"white"}
-      height={"25vh"}
+      height={"27vh"}
       backgroundColor="#111"
     >
       <Text marginBottom={".5rem"} fontSize={"1.5rem"} color={"white"}>
@@ -172,6 +172,34 @@ const Stats: React.FC<StatsProps> = (props) => {
         <Text width={"2rem"} color={"white"} marginInline={"0.5.5rem"}>
           {" "}
           {props.stats.five}
+        </Text>
+      </Box>
+      <Box
+        width={"95%"}
+        display={"flex"}
+        flexDirection={"row"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <Text width={"2rem"} marginInline={".5rem"} color={"white"}>
+          F)
+        </Text>
+        <Box
+          alignItems={"center"}
+          height={"1rem"}
+          width={"95%"}
+          justifyContent={"left"}
+        >
+          <Box
+            borderRadius={"3px"}
+            backgroundColor={"green"}
+            height={"1rem"}
+            width={`${getPercent(props.stats.fail)}%`}
+          ></Box>
+        </Box>
+        <Text width={"2rem"} color={"white"} marginInline={"0.5.5rem"}>
+          {" "}
+          {props.stats.fail}
         </Text>
       </Box>
     </Box>

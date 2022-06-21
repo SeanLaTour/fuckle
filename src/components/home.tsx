@@ -28,6 +28,7 @@ const Home: React.FC<HomeProps> = (props) => {
           three: 0,
           four: 0,
           five: 0,
+          fail: 0
         }
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -90,6 +91,8 @@ const Home: React.FC<HomeProps> = (props) => {
       case 5:
         setStats((stats) => (stats.one += 1));
         break;
+      default:
+        setStats((stats) => (stats.fail += 1));
     }
   };
 
