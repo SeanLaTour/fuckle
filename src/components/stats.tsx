@@ -38,10 +38,10 @@ const Stats: React.FC<StatsProps> = (props) => {
       width={"85vw"}
       borderWidth={"2px"}
       borderColor={"white"}
-      height={"25vh"}
+      height={"27vh"}
       backgroundColor="#111"
     >
-      <Text marginBottom={".5rem"} fontSize={"1.5rem"} color={"white"}>
+      <Text marginBottom={".6rem"} fontSize={"1.5rem"} color={"white"}>
         Stats
       </Text>
       <Box
