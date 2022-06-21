@@ -8,6 +8,7 @@ interface KeyboardProps {
   onClick: Function;
   currentLine: number;
   allUsedLetters: string;
+  setAllUsedLetters: Function
   cussword: string;
 }
 
@@ -43,6 +44,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
   const [toggleX, setToggleX] = useState({ color: "grey", keepSame: false });
   const [toggleY, setToggleY] = useState({ color: "grey", keepSame: false });
   const [toggleZ, setToggleZ] = useState({ color: "grey", keepSame: false });
+  const [canChange, setCanChange] = useState([])
 
   const addLetterToArray = (letter: string) => {
     if (!props.textObj) return;
@@ -50,7 +52,17 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     let tempArray = [...props.textObj.text, letter];
     const string = tempArray.join("");
     props.addText(string);
+    setCanChange([...canChange,letter])
   };
+
+  const determineIfCanChange = (change, letter) => {
+    if (canChange.includes(letter)) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
 
   const sliceIndex = (currentLine: number) => {
     switch (currentLine) {
@@ -78,12 +90,11 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     keepSame: boolean
   ) => {
     const sliceNumbers = sliceIndex(currentLine);
-
+    console.log(letters, "LETTERS")
     if (letters.includes(letter)) {
       const word = letters.slice(sliceNumbers[0], sliceNumbers[1]);
       const indexCuss = cussword.split("").indexOf(letter);
       const indexWord = word.indexOf(letter);
-      console.log(indexWord, indexCuss);
       const currentLetter = letters[indexWord];
 
       function getAllIndexes(arr, val) {
@@ -95,70 +106,50 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         return indexes;
       }
       const allIndexes = getAllIndexes(cussword, currentLetter)
-
+      const findDoubleLetters = (word) => {
+        for (let i = 0; i <= 3; i++) {
+          for (let j = i; j <= 3; j++) {
+            if (word[i] === word[j + 1]) {
+              return word[i];
+            }
+          }
+          if (word[i] === word[i - 1]) {
+            return word[i];
+          }
+        }
+      };
+      const doubleLetters = [];
+      doubleLetters.push(findDoubleLetters(cussword));      
       if (indexWord === indexCuss && indexCuss !== -1 || indexWord === allIndexes[1] && indexCuss !== -1) {
         setFunction({ color: "green", keepSame: true });
-      } else if (
+      } 
+       else if (
         cussword.includes(letter) &&
         !letters.slice(0, sliceNumbers[0]).includes(letter) &&
         !keepSame
       ) {
-        console.log("IN ELSE IF");
-
         setFunction({ color: "yellow", keepSame: false });
-        return
-        const findDoubleLetters = (word) => {
-          for (let i = 0; i <= 3; i++) {
-            for (let j = i; j <= 3; j++) {
-              if (word[i] === word[j + 1]) {
-                return word[i];
-              }
-            }
-            if (word[i] === word[i - 1]) {
-              return word[i];
-            }
-          }
-        };
-
-
-
-        const indexesOfLetter = getAllIndexes(
-          cussword.split(""),
-          currentLetter
-        );
-        console.log("letter indexes: ", indexesOfLetter);
-        const doubleLetters = [];
-        doubleLetters.push(findDoubleLetters(cussword));
-        console.log("DOUBLELetters", doubleLetters);
-        for (let i = 0; i <= 3; i++) {
-          console.log(
-            "loop",
-            currentLetter,
-            cussword.split("")[i],
-            indexWord,
-            indexesOfLetter[i],
-          );
-
-            if (
-              doubleLetters.includes(currentLetter)
-            ) {
-              if (i === indexesOfLetter[0] || i === indexesOfLetter[1]) {
-                console.log(
-                  "HERE HEY!",
-                  currentLetter,
-                  cussword.split("")[i],
-                  indexWord,
-                  indexesOfLetter[i],
-                );
-                setFunction({ color: "green", keepSame: true });
-              }
-            }
-          
-        }
-      } else if (!keepSame && !cussword.includes(letter)) {
+      }  else if (!keepSame && !cussword.includes(letter)) {
         setFunction({ color: "#333", keepSame: true });
+      } else {
+
       }
+     
     }
+  };
+
+  useEffect(() => {
+    console.log(toggleQ)
+  }, [toggleQ])
+
+  const removeLetterFromArray = () => {
+    if (!props.textObj) return;
+    if (props.textObj.text.length > 4) return;
+    if (props.textObj.text.length < 1) return;
+    const tempText = props.textObj.text.slice(0, props.textObj.text.length - 1);
+    props.textObj.setText(tempText);
+    const tempChange = canChange.slice(0, canChange.length - 1)
+    setCanChange(tempChange)
   };
 
   useEffect(() => {
@@ -372,13 +363,6 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     );
   }, [props.onClick]);
 
-  const removeLetterFromArray = () => {
-    if (!props.textObj) return;
-    if (props.textObj.text.length > 4) return;
-    if (props.textObj.text.length < 1) return;
-    const tempText = props.textObj.text.slice(0, props.textObj.text.length - 1);
-    props.textObj.setText(tempText);
-  };
 
   return (
     <Box
@@ -402,6 +386,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"Q"}
+          canChange={determineIfCanChange(canChange, "Q")}
         />
         <Key
           color={toggleW.color}
@@ -410,6 +395,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"W"}
+          canChange={determineIfCanChange(canChange, "W")}
         />
         <Key
           color={toggleE.color}
@@ -418,6 +404,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"E"}
+          canChange={determineIfCanChange(canChange, "E")}
         />
         <Key
           color={toggleR.color}
@@ -426,6 +413,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"R"}
+          canChange={determineIfCanChange(canChange, "R")}
         />
         <Key
           color={toggleT.color}
@@ -434,6 +422,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"T"}
+          canChange={determineIfCanChange(canChange, "T")}
         />
         <Key
           color={toggleY.color}
@@ -442,6 +431,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"Y"}
+          canChange={determineIfCanChange(canChange, "Y")}
         />
         <Key
           color={toggleU.color}
@@ -450,6 +440,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"U"}
+          canChange={determineIfCanChange(canChange, "U")}
         />
         <Key
           color={toggleI.color}
@@ -458,6 +449,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"I"}
+          canChange={determineIfCanChange(canChange, "I")}
         />
         <Key
           color={toggleO.color}
@@ -466,6 +458,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"O"}
+          canChange={determineIfCanChange(canChange, "O")}
         />
         <Key
           color={toggleP.color}
@@ -474,6 +467,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"P"}
+          canChange={determineIfCanChange(canChange, "P")}
         />
       </Box>
       <Box
@@ -491,6 +485,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"A"}
+          canChange={determineIfCanChange(canChange, "A")}
         />
         <Key
           color={toggleS.color}
@@ -499,6 +494,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"S"}
+          canChange={determineIfCanChange(canChange, "S")}
         />
         <Key
           color={toggleD.color}
@@ -507,6 +503,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"D"}
+          canChange={determineIfCanChange(canChange, "D")}
         />
         <Key
           color={toggleF.color}
@@ -515,6 +512,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"F"}
+          canChange={determineIfCanChange(canChange, "F")}
         />
         <Key
           color={toggleG.color}
@@ -523,6 +521,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"G"}
+          canChange={determineIfCanChange(canChange, "G")}
         />
         <Key
           color={toggleH.color}
@@ -531,6 +530,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"H"}
+          canChange={determineIfCanChange(canChange, "H")}
         />
         <Key
           color={toggleJ.color}
@@ -539,6 +539,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"J"}
+          canChange={determineIfCanChange(canChange, "J")}
         />
         <Key
           color={toggleK.color}
@@ -547,6 +548,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"K"}
+          canChange={determineIfCanChange(canChange, "K")}
         />
         <Key
           color={toggleL.color}
@@ -555,6 +557,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"L"}
+          canChange={determineIfCanChange(canChange, "L")}
         />
       </Box>
       <Box
@@ -573,6 +576,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           setLetter={addLetterToArray}
           letter={"Enter"}
           thickKey={true}
+          canChange={canChange}
         />
         <Key
           color={toggleZ.color}
@@ -581,6 +585,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"Z"}
+          canChange={determineIfCanChange(canChange, "Z")}
         />
         <Key
           color={toggleX.color}
@@ -589,6 +594,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"X"}
+          canChange={determineIfCanChange(canChange, "X")}
         />
         <Key
           color={toggleC.color}
@@ -597,6 +603,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"C"}
+          canChange={determineIfCanChange(canChange, "C")}
         />
         <Key
           color={toggleV.color}
@@ -605,6 +612,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"V"}
+          canChange={determineIfCanChange(canChange, "V")}
         />
         <Key
           color={toggleB.color}
@@ -613,6 +621,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"B"}
+          canChange={determineIfCanChange(canChange, "B")}
         />
         <Key
           color={toggleN.color}
@@ -621,6 +630,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"N"}
+          canChange={determineIfCanChange(canChange, "N")}
         />
         <Key
           color={toggleM.color}
@@ -629,6 +639,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
           allUsedLetters={props.allUsedLetters}
           setLetter={addLetterToArray}
           letter={"M"}
+          canChange={determineIfCanChange(canChange, "M")}
         />
         <Key
           color="grey"

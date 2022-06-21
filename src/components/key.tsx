@@ -10,18 +10,20 @@ interface KeyProps {
   allUsedLetters: string;
   cussword: string;
   color: string;
+  canChange: boolean
 }
 
 const Key: React.FC<KeyProps> = (props) => {
-  const [color, setColor] = useState();
-
+  const [color, setColor] = useState("grey");
   useEffect(() => {
-    setColor(props.color);
+    props.canChange ? setColor(props.color) : ""
   }, [props.currentLine]);
 
   return (
     <Box
       onClick={() => {
+
+        console.log(props.allUsedLetters)
         props.letter === "Enter"
           ? props.onClick(props.currentLine)
           : props.setLetter(props.letter);

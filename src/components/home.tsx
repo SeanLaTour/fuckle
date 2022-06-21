@@ -119,6 +119,7 @@ const Home: React.FC<HomeProps> = (props) => {
       alreadyUsedLetters.push(word[i]);
     }
     setColors(tempColorsArray);
+    
     setAllUsedLetters(allUsedLetters + word.join(""));
 
     if (word.join("") === cussword) {
@@ -142,6 +143,7 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   const enterChecker = (line: number) => {
+    console.log("ALL", allUsedLetters)
     if (currentLine > 5) return;
     switch (line) {
       case 1:
@@ -293,6 +295,7 @@ const Home: React.FC<HomeProps> = (props) => {
           textObj={determineLine(currentLine)}
           addText={addTextToLine}
           allUsedLetters={allUsedLetters}
+          setAllUsedLetters={setAllUsedLetters}
           cussword={cussWord}
         />
       </Box>
