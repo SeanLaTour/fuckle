@@ -17,9 +17,10 @@ import Stats from "./stats";
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = (props) => {
+  const isBrowser = typeof window !== "undefined"
   const [toggleStats, setToggleStates] = useState(false);
   const [stats, setStats] = useState(
-    typeof window !== undefined && window.localStorage.getItem("fuckle-stats")
+    isBrowser && window.localStorage.getItem("fuckle-stats")
       ? JSON.parse(window.localStorage.getItem("fuckle-stats"))
       : {
           one: 0,
@@ -164,7 +165,7 @@ const Home: React.FC<HomeProps> = (props) => {
       setStatsFromCurrentGame(currentLine);
       setTimeout(() => {
         console.log("STATS", stats);
-        typeof window !== undefined ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats)): stats;
+        isBrowser ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats)): stats;
         onOpen();
       }, 2000);
     }
@@ -306,7 +307,7 @@ const Home: React.FC<HomeProps> = (props) => {
           >
             {toggleStats ? (
               <Stats
-                stats={typeof window !== undefined ? JSON.parse(window.localStorage.getItem("fuckle-stats")): stats}
+                stats={isBrowser? JSON.parse(window.localStorage.getItem("fuckle-stats")): stats}
               />
             ) : (
               <Box
