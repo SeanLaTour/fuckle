@@ -164,7 +164,7 @@ const Home: React.FC<HomeProps> = (props) => {
       setStatsFromCurrentGame(currentLine);
       setTimeout(() => {
         console.log("STATS", stats);
-        window !== undefined ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats));
+        window !== undefined ? window.localStorage.setItem("fuckle-stats", JSON.stringify(stats)): stats;
         onOpen();
       }, 2000);
     }
