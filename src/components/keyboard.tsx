@@ -8,7 +8,7 @@ interface KeyboardProps {
   onClick: Function;
   currentLine: number;
   allUsedLetters: string;
-  setAllUsedLetters: Function
+  setAllUsedLetters: Function;
   cussword: string;
 }
 
@@ -44,7 +44,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
   const [toggleX, setToggleX] = useState({ color: "grey", keepSame: false });
   const [toggleY, setToggleY] = useState({ color: "grey", keepSame: false });
   const [toggleZ, setToggleZ] = useState({ color: "grey", keepSame: false });
-  const [canChange, setCanChange] = useState([])
+  const [canChange, setCanChange] = useState([]);
 
   const addLetterToArray = (letter: string) => {
     if (!props.textObj) return;
@@ -52,17 +52,16 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     let tempArray = [...props.textObj.text, letter];
     const string = tempArray.join("");
     props.addText(string);
-    setCanChange([...canChange,letter])
+    setCanChange([...canChange, letter]);
   };
 
   const determineIfCanChange = (change, letter) => {
     if (canChange.includes(letter)) {
-      return true
+      return true;
+    } else {
+      return false;
     }
-    else {
-      return false
-    }
-  }
+  };
 
   const sliceIndex = (currentLine: number) => {
     switch (currentLine) {
@@ -90,7 +89,6 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     keepSame: boolean
   ) => {
     const sliceNumbers = sliceIndex(currentLine);
-    console.log(letters, "LETTERS")
     if (letters.includes(letter)) {
       const word = letters.slice(sliceNumbers[0], sliceNumbers[1]);
       const indexCuss = cussword.split("").indexOf(letter);
@@ -105,7 +103,7 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         }
         return indexes;
       }
-      const allIndexes = getAllIndexes(cussword, currentLetter)
+      const allIndexes = getAllIndexes(cussword, currentLetter);
       const findDoubleLetters = (word) => {
         for (let i = 0; i <= 3; i++) {
           for (let j = i; j <= 3; j++) {
@@ -119,28 +117,23 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
         }
       };
       const doubleLetters = [];
-      doubleLetters.push(findDoubleLetters(cussword));      
-      if (indexWord === indexCuss && indexCuss !== -1 || indexWord === allIndexes[1] && indexCuss !== -1) {
+      doubleLetters.push(findDoubleLetters(cussword));
+      if (
+        (indexWord === indexCuss && indexCuss !== -1) ||
+        (indexWord === allIndexes[1] && indexCuss !== -1)
+      ) {
         setFunction({ color: "green", keepSame: true });
-      } 
-       else if (
+      } else if (
         cussword.includes(letter) &&
         !letters.slice(0, sliceNumbers[0]).includes(letter) &&
         !keepSame
       ) {
         setFunction({ color: "yellow", keepSame: false });
-      }  else if (!keepSame && !cussword.includes(letter)) {
+      } else if (!keepSame && !cussword.includes(letter)) {
         setFunction({ color: "#333", keepSame: true });
-      } else {
-
       }
-     
     }
   };
-
-  useEffect(() => {
-    console.log(toggleQ)
-  }, [toggleQ])
 
   const removeLetterFromArray = () => {
     if (!props.textObj) return;
@@ -148,8 +141,8 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
     if (props.textObj.text.length < 1) return;
     const tempText = props.textObj.text.slice(0, props.textObj.text.length - 1);
     props.textObj.setText(tempText);
-    const tempChange = canChange.slice(0, canChange.length - 1)
-    setCanChange(tempChange)
+    const tempChange = canChange.slice(0, canChange.length - 1);
+    setCanChange(tempChange);
   };
 
   useEffect(() => {
@@ -362,7 +355,6 @@ const Keyboard: React.FC<KeyboardProps> = (props) => {
       toggleZ.keepSame
     );
   }, [props.onClick]);
-
 
   return (
     <Box

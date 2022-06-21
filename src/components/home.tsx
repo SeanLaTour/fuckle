@@ -12,10 +12,23 @@ import { useState } from "react";
 import TextLine from "./text_line";
 import { CUSS_WORDS } from "./cuss_words";
 import Keyboard from "./keyboard";
+import Stats from "./stats";
 
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = (props) => {
+  const [toggleStats, setToggleStates] = useState(false);
+  const [stats, setStats] = useState(
+    window.localStorage.getItem("fuckle-stats")
+      ? JSON.parse(window.localStorage.getItem("fuckle-stats"))
+      : {
+          one: 0,
+          two: 0,
+          three: 0,
+          four: 0,
+          five: 0,
+        }
+  );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [modalText, setModalText] = useState("");
   const [allUsedLetters, setAllUsedLetters] = useState("");
@@ -58,6 +71,26 @@ const Home: React.FC<HomeProps> = (props) => {
   const [cussWord, setCussWord] = useState(
     CUSS_WORDS[Math.floor(Math.random() * CUSS_WORDS.length)]
   );
+
+  const setStatsFromCurrentGame = (attempts) => {
+    switch (attempts) {
+      case 1:
+        setStats((stats) => (stats.one += 1));
+        break;
+      case 2:
+        setStats((stats) => (stats.two += 1));
+        break;
+      case 3:
+        setStats((stats) => (stats.three += 1));
+        break;
+      case 4:
+        setStats((stats) => (stats.four += 1));
+        break;
+      case 5:
+        setStats((stats) => (stats.one += 1));
+        break;
+    }
+  };
 
   const translateNumberToText = (number: number) => {
     switch (number) {
@@ -119,7 +152,7 @@ const Home: React.FC<HomeProps> = (props) => {
       alreadyUsedLetters.push(word[i]);
     }
     setColors(tempColorsArray);
-    
+
     setAllUsedLetters(allUsedLetters + word.join(""));
 
     if (word.join("") === cussword) {
@@ -128,7 +161,10 @@ const Home: React.FC<HomeProps> = (props) => {
           currentLine
         )} ${currentLine === 1 ? "try" : "tries"}! Congratulations!`
       );
+      setStatsFromCurrentGame(currentLine);
       setTimeout(() => {
+        console.log("STATS", stats);
+        window.localStorage.setItem("fuckle-stats", JSON.stringify(stats));
         onOpen();
       }, 2000);
     }
@@ -143,7 +179,6 @@ const Home: React.FC<HomeProps> = (props) => {
   };
 
   const enterChecker = (line: number) => {
-    console.log("ALL", allUsedLetters)
     if (currentLine > 5) return;
     switch (line) {
       case 1:
@@ -269,24 +304,36 @@ const Home: React.FC<HomeProps> = (props) => {
             display={"flex"}
             textAlign={"center"}
           >
-            <Box
-              display={"flex"}
-              borderRadius={"5px"}
-              padding="2rem"
-              alignItems={"center"}
-              justifyContent={"center"}
-              flexDirection={"column"}
-              width={"85vw"}
-              borderWidth={"2px"}
-              borderColor={"white"}
-              height={"20vh"}
-              backgroundColor="#111"
-            >
-              <Text color="white">{modalText}</Text>
-              <Button onClick={onClose} marginTop="1rem" color={"white"}>
-                Close
-              </Button>
-            </Box>
+            {toggleStats ? (
+              <Stats
+                stats={JSON.parse(window.localStorage.getItem("fuckle-stats"))}
+              />
+            ) : (
+              <Box
+                display={"flex"}
+                borderRadius={"5px"}
+                padding="2rem"
+                alignItems={"center"}
+                justifyContent={"center"}
+                flexDirection={"column"}
+                width={"85vw"}
+                borderWidth={"2px"}
+                borderColor={"white"}
+                height={"20vh"}
+                backgroundColor="#111"
+              >
+                <Text color="white">{modalText}</Text>
+                <Button
+                  onClick={() => {
+                    setToggleStates(true);
+                  }}
+                  marginTop="1rem"
+                  color={"white"}
+                >
+                  See Stats
+                </Button>
+              </Box>
+            )}
           </ModalContent>
         </Modal>
         <Keyboard
